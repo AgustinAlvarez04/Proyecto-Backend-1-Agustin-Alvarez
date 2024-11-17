@@ -1,4 +1,4 @@
 # Backend-I---Pre-Entrega---Agustin-Alvarez
 
 
-Hola saul, perdon que haga entrega de un link vacio. Tuve que hacer horas extras estas semanas en el trabajo y no tuve tiempo para ponerme al dia con la cursada,si me das una chance antes del viernes lo tengo terminado te lo prometo. Perdon y gracias <3 
+Hola saul, perdon todavia no termine el trabajo, hoy termine de ver la clase 7. Estoy atrasado pq tuve que hacer horas extras en el trabajo y no me quedo tiempo para practicar. Entre hoy y mañana lo termino si o si, perdon y gracias<3
