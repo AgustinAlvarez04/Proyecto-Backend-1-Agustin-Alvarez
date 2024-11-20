@@ -1,0 +1,33 @@
+[
+    {
+        "id": 1,
+        "title": "Teclado Gamer",
+        "description": "Teclado 60%",
+        "code":"QWERTY",
+        "price": 2000,
+        "status": true,
+        "stock":10,
+        "category":"Asus"
+    },
+    {
+        "id": 2,
+        "title": "Auriculares Gamer",
+        "description": "Auriculares con cancelacion de exterior",
+        "code": "ASDFG",
+        "price": 1000,
+        "status": false,
+        "stock":5,
+        "category":"HyperX"
+    },
+    {
+        "id": 3,
+        "title": "Monitor Gamer",
+        "description": "Monitor 144hz antireflejante",
+        "code": "ZXCVB",
+        "price": 3500,
+        "status": true,
+        "stock": 15,
+        "category":"Samsung"
+    }
+]
+
