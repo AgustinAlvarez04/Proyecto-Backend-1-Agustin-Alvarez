@@ -9,17 +9,15 @@ export default class ProductManager {
 	#products;
 
 	constructor() {
-		this.#jsonFilename = "productos.json";
+		this.#jsonFilename = "products.json";
 	}
 
 	async #findOneById(id) {
 		this.#products = await this.getAll();
 		const productFound = this.#products.find((item) => item.id === Number(id));
-
 		if (!productFound) {
 			throw new ErrorManager("ID inexistente", 404);
 		}
-
 		return productFound;
 	}
 

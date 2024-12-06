@@ -1,0 +1,134 @@
+[
+	{
+		"id": 1,
+		"title": "Gabinete Gamer",
+		"description": "Cooler Master Masterbox 520 Mesh X3",
+		"code": "520MX",
+		"price": 950,
+		"status": true,
+		"stock": 20,
+		"category": "Cooler Master",
+		"thumbnail": "file_4639_06122024_184222.webp"
+	},
+	{
+		"id": 2,
+		"title": "Perifericos Teclado USB",
+		"description": "Redragon Harpe PRO Gamer K503A-RGB-SP",
+		"code": "K5303",
+		"price": 310,
+		"status": true,
+		"stock": 5,
+		"category": "Redragon",
+		"thumbnail": "file_6890_06122024_184406.webp"
+	},
+	{
+		"id": 3,
+		"title": "Perifericos Teclado Gamer",
+		"description": "USB Asus Rog Falchion NX Gamer Mecanico M601",
+		"code": "QWERTY",
+		"price": 2000,
+		"status": true,
+		"stock": 10,
+		"category": "Asus",
+		"thumbnail": "file_9303_06122024_184514.webp"
+	},
+	{
+		"id": 4,
+		"title": "Auriculares Gamer",
+		"description": "Auriculares con cancelacion de exterior",
+		"code": "ASDFG",
+		"price": 1000,
+		"status": true,
+		"stock": 5,
+		"category": "HyperX",
+		"thumbnail": "file_2568_06122024_184621.webp"
+	},
+	{
+		"id": 5,
+		"title": "Monitor Gamer",
+		"description": "Monitor 144hz antireflejante",
+		"code": "ZXCVB",
+		"price": 3500,
+		"status": true,
+		"stock": 15,
+		"category": "Samsung",
+		"thumbnail": "file_9627_06122024_184716.webp"
+	},
+	{
+		"id": 6,
+		"title": "Placa de Video",
+		"description": "Nvidia Geforce Asus RTX 4070 Ti Super Tuf Gaming 16GB OC",
+		"code": "RTX47",
+		"price": 5000,
+		"status": true,
+		"stock": 8,
+		"category": "Nvidia",
+		"thumbnail": "file_4439_06122024_184805.webp"
+	},
+	{
+		"id": 7,
+		"title": "Perifericos Microfono",
+		"description": "Razer Seiren V2",
+		"code": "XRZ19",
+		"price": 900,
+		"status": true,
+		"stock": 2,
+		"category": "Razer",
+		"thumbnail": "file_5144_06122024_184851.webp"
+	},
+	{
+		"id": 8,
+		"title": "Perifericos Mouse Inalambrico",
+		"description": "Logitech G309 Lightspedd",
+		"code": "91000",
+		"price": 770,
+		"status": true,
+		"stock": 6,
+		"category": "Logitech",
+		"thumbnail": "file_8656_06122024_184946.webp"
+	},
+	{
+		"id": 9,
+		"title": "Perifericos Pad Mouse",
+		"description": "Razer Gigantus V2 3XL 1200x550x4mm",
+		"code": "RZ020",
+		"price": 800,
+		"status": true,
+		"stock": 10,
+		"category": "Razer",
+		"thumbnail": "file_1920_06122024_185028.webp"
+	},
+	{
+		"id": 10,
+		"title": "Perifericos Camaras/Webcam",
+		"description": "Logitech MX Brio 4K 960-001548",
+		"code": "4K960",
+		"price": 300,
+		"status": true,
+		"stock": 11,
+		"category": "Logitech",
+		"thumbnail": "file_3779_06122024_185107.webp"
+	},
+	{
+		"id": 11,
+		"title": "Placa De Video ",
+		"description": "Radeon Asus RX 7600 Dual 8GB OC ",
+		"code": "RX760",
+		"price": 400,
+		"status": true,
+		"stock": 4,
+		"category": "Asus",
+		"thumbnail": "file_3153_06122024_190342.jpeg"
+	},
+	{
+		"id": 12,
+		"title": "Silla Gamer",
+		"description": "Cooler Master Caliber E1 Pink",
+		"code": "CMIGC",
+		"price": 290,
+		"status": true,
+		"stock": 20,
+		"category": "Cooler Master",
+		"thumbnail": "file_8480_06122024_190450.jpg"
+	}
+]

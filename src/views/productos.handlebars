@@ -1,0 +1,17 @@
+<h1>Lista de Productos</h1>
+
+<table>
+    <tr>
+        <th>Titulo</th>
+        <th>Descripcion</th>
+        <th>Precio</th>
+    </tr>
+    {{#each products }}
+    <tr>
+        <td>{{this.title}}</td>
+        <td>{{this.description}}</td>
+        <td>{{this.price}}</td>
+    </tr>
+    {{/each}}
+</table>
+<p>Hace clic <a href="/users/register">aquí</a> para registrar un usuario</p>

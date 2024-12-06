@@ -1,0 +1,69 @@
+* {
+	box-sizing: border-box;
+}
+
+h1,
+h2,
+h3 {
+	color: #ff0000;
+}
+
+.error404 {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.error404 img {
+	width: 400px;
+}
+
+.error-message {
+	color: red;
+}
+
+div#products-list {
+	display: flex;
+	flex-direction: row;
+	align-content: center;
+	align-items: center;
+}
+
+.card {
+	width: 18rem;
+	margin: 1rem;
+}
+
+.products {
+	display: flex;
+}
+
+
+table {
+    width: 900px;
+    background-color: white;
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+table tr th,
+table tr td {
+    border: 1px solid black;
+    padding: 0.25rem;
+}
+
+.centrar{
+	width: 100%;
+	display: flex;
+	flex-direction:column;
+	align-items: center;
+}
+
+.form_products{
+	width: 100%;
+	display: flex;
+	flex-direction:column;
+	align-items: center;
+	line-height: 50px;
+}

@@ -3,6 +3,7 @@ import { readJsonFile, writeJsonFile } from "../utils/fileHandler.js";
 import { generateId } from "../utils/collectionHandler.js";
 import ErrorManager from "./ErrorManager.js";
 
+
 export default class cartManager {
 	#jsonFilename;
 	#cart;
@@ -14,9 +15,11 @@ export default class cartManager {
 	async #findOneById(id) {
 		this.#cart = await this.getAll();
 		const cartFound = this.#cart.find((item) => item.id === Number(id));
+
 		if (!cartFound) {
-			throw new ErrorManager("ID inexistente", 404);
+			throw new ErrorManager("ID no encontrado", 404);
 		}
+
 		return cartFound;
 	}
 
