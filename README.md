@@ -1,2 +1,3 @@
 # Backend-I---Pre-Entrega---Agustin-Alvarez
-Hola saul sigo a full con el laburo, tengo algunos problemas con el carrito y con la base de datos. Estoy trabajando en ello y estimo que a mas tardar para el martes-miercoles tengo terminado al 100 el trabajo. Perdon por demorar tanto en la cursada y agradezco la mano que sioempre me das, buen finde y buenas fiestas <3
+Hola saul, estoy teniendo complicaciones con la base de datos nuevamente. Hago entrega de lo que tengo mientras asi no queda TAN incompleto. Tambien me taltan una que otra view q me esta dando errores. Perdon por la tardanza y gracias por la espera <3
+
