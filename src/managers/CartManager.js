@@ -1,89 +1,182 @@
-import paths from "../utils/paths.js";
-import { readJsonFile, writeJsonFile } from "../utils/fileHandler.js";
-import { generateId } from "../utils/collectionHandler.js";
+import mongoose from "mongoose";
+import mongoDB from "../config/mongoose.config.js";
+import CartModel from "../models/cart.model.js";
 import ErrorManager from "./ErrorManager.js";
 
-
-export default class cartManager {
-	#jsonFilename;
-	#cart;
-
+export default class CartManager {
+	#cartModel;
 	constructor() {
-		this.#jsonFilename = "cart.json";
+		this.#cartModel = CartModel;
 	}
 
-	async #findOneById(id) {
-		this.#cart = await this.getAll();
-		const cartFound = this.#cart.find((item) => item.id === Number(id));
-
-		if (!cartFound) {
-			throw new ErrorManager("ID no encontrado", 404);
-		}
-
-		return cartFound;
-	}
-
-	async getAll() {
+	getAll = async (params) => {
 		try {
-			this.#cart = await readJsonFile(paths.files, this.#jsonFilename);
-			return this.#cart;
+			const sort = {
+				asc: { name: 1 },
+				desc: { name: -1 },
+			};
+			const paginationOptions = {
+				limit: params?.limit ?? 4,
+				page: params?.page ?? 1,
+				sort: sort[params?.sort] ?? {},
+				populate: "products.product",
+				lean: true,
+			};
+			const cartsFound = await this.#cartModel.paginate({}, paginationOptions);
+			return cartsFound;
 		} catch (error) {
-			throw new ErrorManager(error.message, error.code);
+			throw ErrorManager.handleError(error);
 		}
-	}
+	};
 
-	async getOneById(id) {
+	getOneById = async (id) => {
 		try {
-			const cartFound = await this.#findOneById(id);
+			if (!mongoDB.isValidID(id)) {
+				throw new ErrorManager("ID inválido", 400);
+			}
+			const cartFound = await this.#cartModel
+				.findById(id)
+				.populate("products.product")
+				.lean();
+			if (!cartFound) {
+				throw new ErrorManager("ID no encontrado", 404);
+			}
 			return cartFound;
 		} catch (error) {
-			throw new ErrorManager(error.message, error.code);
+			throw ErrorManager.handleError(error);
 		}
-	}
+	};
 
-	async insertOne(data) {
+	insertOne = async (data) => {
 		try {
-			const products = data?.products?.map((item) => {
-				return { pcar: Number(item.product), quantity: 1 };
-			});
-
-			const cart = {
-				id: generateId(await this.getAll()),
-				products: products ?? [],
-			};
-
-			this.#cart.push(cart);
-			await writeJsonFile(paths.files, this.#jsonFilename, this.#cart);
-
-			return cart;
+			const cartCreated = new CartModel(data);
+			await cartCreated.save();
+			return cartCreated;
 		} catch (error) {
+			if (error instanceof mongoose.Error.ValidationError) {
+				error.message = Object.values(error.errors)[0];
+			}
+			throw ErrorManager.handleError(error);
+		}
+	};
+
+	updateOneById = async (id, data) => {
+		try {
+			if (!mongoDB.isValidID(id)) {
+				throw new ErrorManager("ID inválido", 400);
+			}
+			const cartFound = await this.#cartModel.findById(id);
+			if (!cartFound) {
+				throw new ErrorManager("ID no encontrado", 404);
+			}
+			cartFound.products = data.products;
+			await cartFound.save();
+			return cartFound;
+		} catch (error) {
+			if (error instanceof mongoose.Error.ValidationError) {
+				error.message = Object.values(error.errors)[0];
+			}
 			throw new ErrorManager(error.message, error.code);
 		}
-	}
+	};
 
-	addOneProduct = async (id, productId) => {
+	deleteOneById = async (id) => {
 		try {
-			const cartFound = await this.#findOneById(id);
-			const productIndex = cartFound.products.findIndex(
-				(item) => item.product === Number(productId)
-			);
+			if (!mongoDB.isValidID(id)) {
+				throw new ErrorManager("ID inválido", 400);
+			}
+			const cartFound = await this.#cartModel.findById(id);
+			if (!cartFound) {
+				throw new ErrorManager("ID no encontrado", 404);
+			}
+			await this.#cartModel.findByIdAndDelete(id);
+			return cartFound;
+		} catch (error) {
+			throw ErrorManager.handleError(error);
+		}
+	};
 
-			if (productIndex >= 0) {
-				cartFound.products[productIndex].quantity++;
-			} else {
-				cartFound.products.push({
-					product: Number(productId),
-					quantity: 1,
-				});
+	addProductToCart = async (cartId, productId, quantity) => {
+		try {
+			if (!mongoDB.isValidID(cartId) || !mongoDB.isValidID(productId)) {
+				throw new ErrorManager("ID inválido", 400);
 			}
 
-			const index = this.#cart.findIndex((item) => item.id === Number(id));
-			this.#cart[index] = cartFound;
-			await writeJsonFile(paths.files, this.#jsonFilename, this.#cart);
+			const cartFound = await this.#cartModel.findById(cartId);
+			if (!cartFound) {
+				throw new ErrorManager("ID de carrito no encontrado", 404);
+			}
 
+			const currentIndex = cartFound.products.findIndex(
+				(product) => product.product.toString() === productId
+			);
+			if (currentIndex >= 0) {
+				const product = cartFound.products[currentIndex];
+				product.quantity += quantity;
+				cartFound.products[currentIndex] = product;
+			} else {
+				cartFound.products.push({ product: productId, quantity });
+			}
+			await cartFound.save();
 			return cartFound;
 		} catch (error) {
-			throw new ErrorManager(error.message, error.code);
+			if (error instanceof mongoose.Error.ValidationError) {
+				error.message = Object.values(error.errors)[0];
+			}
+			throw new ErrorManager(error.message);
+		}
+	};
+
+	deleteProductFromCart = async (id, productId, quantity) => {
+		try {
+			if (!mongoDB.isValidID(id) || !mongoDB.isValidID(productId)) {
+				throw new ErrorManager("ID inválido", 400);
+			}
+
+			const cartFound = await this.#cartModel.findById(id);
+			if (!cartFound) {
+				throw new ErrorManager("ID de carrito no encontrado", 404);
+			}
+
+			const currentIndex = cartFound.products.findIndex(
+				(product) => product.product.toString() === productId
+			);
+			if (currentIndex < 0) {
+				throw new ErrorManager(
+					"ID del producto no encontrado",
+					404
+				);
+			}
+
+			const product = cartFound.products[currentIndex];
+			if (product.quantity > quantity) {
+				product.quantity -= quantity;
+				cartFound.products[currentIndex] = product;
+			} else {
+				cartFound.products.splice(currentIndex, 1);
+			}
+
+			await cartFound.save();
+			return cartFound;
+		} catch (error) {
+			throw ErrorManager.handleError(error);
+		}
+	};
+
+	deleteAllProductsFromCart = async (id) => {
+		try {
+			if (!mongoDB.isValidID(id)) {
+				throw new ErrorManager("ID inválido", 400);
+			}
+			const cartFound = await this.#cartModel.findById(id);
+			if (!cartFound) {
+				throw new ErrorManager("ID no encontrado", 404);
+			}
+			cartFound.products = [];
+			await cartFound.save();
+			return cartFound;
+		} catch (error) {
+			throw ErrorManager.handleError(error);
 		}
 	};
 }

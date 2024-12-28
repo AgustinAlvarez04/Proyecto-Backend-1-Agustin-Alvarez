@@ -1,18 +1,98 @@
-<header class="container">
-	<h1>Bienvenido a la tienda</h1>
+<header>
+	<h1>Productos</h1>
+	<section class="carrito">
+		<h3>Carrito</h3>
+		<div>
+			<a
+				href="/carts/{{data.currentCartId}}"
+				title="Ver detalles del carrito..."
+				class="btn btn-outline-success"
+			><span>Ver carrito 🛒</span></a>
+			<button
+				class="btn btn-outline-danger"
+				onclick="removeAllProducts('{{data.currentCartId}}')"
+			>Vaciar Carrito🗑️</button>
+		</div>
+	</section>
 </header>
 
 <main class="container">
-	<section>
-		<h3>Productos</h3>
-		<div class="products">
-			<div class="products_list">
-				<ul class="ingredients_list_item" id="products-list"></ul>
+	<section class="catalog">
+		<h3>Catalogo</h3>
+		<div class="container-products-table__pagination">
+			<div>
+				{{#if data.prevPage}}
+					<a href="/productos?page={{data.prevPage}}{{data.sort}}"><button
+						>Anterior</button></a>
+				{{/if}}
+
+				{{#if data.hasNextPage}}
+					<a href="/productos?page={{data.nextPage}}{{data.sort}}"><button
+							class="btn btn-primary"
+						>Siguiente</button></a>
+				{{/if}}
+
+				<a href="/productos?page={{data.page}}&sort=asc"><button
+						class="btn btn-outline-primary"
+					>⬇</button></a>
+				<a href="/productos?page={{data.page}}&sort=desc"><button
+						class="btn btn-outline-primary"
+					>⬆</button></a>
+				<a href="/productos?page={{data.page}}"><button
+						class="btn btn-outline-primary"
+					>⬌</button></a>
 			</div>
-			<button id="btn-refresh-products-list" class="btn btn-primary">Recargar Lista</button>
+
+			<span>Página
+				{{data.page}}
+				de
+				{{data.totalPages}}
+				({{data.totalDocs}}
+				documentos)</span>
+		</div>
+		<div class="catalogo">
+			{{#each data.docs}}
+				<div class="card" style="width: 14rem;">
+					<img
+						src="public/images/{{this.thumbnail}}"
+						class="card-img-top"
+						alt="..."
+					/>
+					<div class="card-body">
+						<h5 class="card-title">{{this.title}}</h5>
+						<p class="card-text">id: {{this.id}}</p>
+					</div>
+					<ul class="list-group list-group-flush">
+						<li class="list-group-item">Category: {{this.category}}</li>
+						<li class="list-group-item">Stock: {{this.stock}}</li>
+						<li class="list-group-item">Price:
+							<strong>$ {{this.price}}</strong></li>
+					</ul>
+					<div class="card-body">
+						<a
+							href="/products/{{this.id}}/cart/{{this.currentCartId}}"
+							class="card-link"
+						>Ver más...</a>
+						<button
+							onclick="addProduct('{{this.currentCartId}}', '{{this.id}}')"
+							title="Agregar en el carro"
+						>✅</button>
+						<button
+							onclick="removeProduct('{{this.currentCartId}}', '{{this.id}}')"
+							title="Quitar del carro"
+						>✖️</button>
+					</div>
+				</div>
+			{{/each}}
 		</div>
 	</section>
+	<section class="carrito">
+		<a href="/realtimeproducts"><button
+				type="button"
+				class="btn btn-primary"
+			>Crear Producto</button></a>
+	</section>
+
 </main>
 
-<script src="/socket.io/socket.io.js"></script>
-<script src="/api/public/js/products.js"></script>
+<script src="/public/js/products.js"></script>

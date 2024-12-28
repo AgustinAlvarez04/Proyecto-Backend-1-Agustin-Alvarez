@@ -1,53 +1,37 @@
 import fs from "fs";
 import path from "path";
 
-const validateFilePathAndName = (filepath, filename) => {
-	if (!filepath)
-		throw new Error(`No se encontro el archivo ${filename}`);
-	if (!filename)
-		throw new Error(`No se encontro el nombre del archivo ${filename}`);
-};
+export default class FileSystem {
+	read = async (filepath, filename) => {
+		if (!filepath)
+			throw new Error("Lectura. No has enviado la ruta del archivo");
+		if (!filename)
+			throw new Error("Lectura. No has enviado el nombre del archivo");
 
-export const readJsonFile = async (filepath, filename) => {
-	validateFilePathAndName(filepath, filename);
+		const content = await fs.promises.readFile(path.join(filepath, filename));
+		return content;
+	};
 
-	try {
-		const content = await fs.promises.readFile(
-			path.join(filepath, filename),
-			"utf8"
-		);
-		return JSON.parse(content || "[]");
-	} catch (error) {
-		throw new Error(`Se produjo un error de lectura ${filename}`);
-	}
-};
+	write = async (filepath, filename, content) => {
+		if (!filepath)
+			throw new Error("Escritura. No has enviado la ruta del archivo");
+		if (!filename)
+			throw new Error("Escritura. No has enviado el nombre del archivo");
+		if (!content) throw new Error("Escritura. No has enviado contenido");
 
-export const writeJsonFile = async (filepath, filename, content) => {
-	validateFilePathAndName(filepath, filename);
+		return await fs.promises.writeFile(path.join(filepath, filename), content);
+	};
 
-	if (!content) throw new Error("No pudimos encontrar el archivo");
+	delete = async (filepath, filename) => {
+		if (!filepath)
+			throw new Error("Eliminación. No has enviado la ruta del archivo");
+		if (!filename)
+			throw new Error("Eliminación. No has enviado el nombre del archivo");
 
-	try {
-		await fs.promises.writeFile(
-			path.join(filepath, filename),
-			JSON.stringify(content, null, "\t"),
-			"utf8"
-		);
-	} catch (error) {
-		throw new Error(`Se produjo un error al escribir el archivo ${filename}`);
-	}
-};
-
-export const deleteFile = async (filepath, filename) => {
-	validateFilePathAndName(filepath, filename);
-
-	try {
-		await fs.promises.unlink(path.join(filepath, filename));
-	} catch (error) {
-		if (error.code === "ENOENT") {
-			console.warn(`Archivo ${filename} inexistente.`);
-		} else {
-			throw new Error(`Se produjo un error al eliminar el archivo ${filename}`);
+		try {
+			return await fs.promises.unlink(path.join(filepath, filename));
+		} catch (error) {
+			console.log("Eliminación. No existe el archivo");
 		}
-	}
-};
+	};
+}

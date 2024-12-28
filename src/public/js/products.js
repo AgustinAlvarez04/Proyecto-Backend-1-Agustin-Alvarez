@@ -1,19 +1,22 @@
-const productsList = document.getElementById("products-list");
-const btnRefreshProductsList = document.getElementById("btn-refresh-products-list");
+const productsForm = document.getElementById("products-form");
+const inputProductId = document.getElementById("input-product-id");
+const btnDeleteProduct = document.getElementById("btn-delete-product");
 
-const loadProductsList = async () => {
-	const response = await fetch("/api/products", { method: "GET" });
-	const data = await response.json();
-	const products = data.payload;
-	productsList.innerText = "";
-	products.forEach((product) => {
-		productsList.innerHTML += `<li>Id: ${product.id} - Nombre: ${product.title}</li>`;
+const addProduct = async (cartId, currentProductId) => {
+	const options = {
+		method: "PUT",
+		headers: { "Content-Type": "application/json" },
+		body: JSON.stringify({ quantity: 1 }),
+	};
+	await fetch(`/api/carts/${cartId}/products/${currentProductId}`, options);
+};
+const removeProduct = async (cartId, currentCartId) => {
+	await fetch(`/api/carts/${cartId}/products/${currentCartId}`, {
+		method: "DELETE",
 	});
 };
-
-btnRefreshProductsList.addEventListener("click", () => {
-	loadProductsList();
-	console.log("¡Lista recargada!");
-});
-
-loadProductsList();
+const removeAllProducts = async (cartId) => {
+	await fetch(`/api/carts/${cartId}/products`, {
+		method: "DELETE",
+	});
+};
