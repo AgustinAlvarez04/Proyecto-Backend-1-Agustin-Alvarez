@@ -17,6 +17,7 @@ export const connectDB = async () => {
 export const isValidID = (id) => {
 	return Types.ObjectId.isValid(id);
 };
+
 export default {
 	connectDB,
 	isValidID,

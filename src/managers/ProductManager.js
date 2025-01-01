@@ -14,6 +14,10 @@ export default class ProductManager {
 		this.#productModel = ProductModel;
 		this.#fileHandler = new FileHandler();
 	}
+
+
+
+	// Obtiene todos los productos con opciones de paginación //
 	getAll = async (paramFilters) => {
 		try {
 			const $and = [];
@@ -45,6 +49,9 @@ export default class ProductManager {
 			throw ErrorManager.handleError(error);
 		}
 	};
+
+
+
 
 	getOneById = async (id) => {
 		try {
