@@ -1,7 +1,6 @@
 import ErrorManager from "./ErrorManager.js";
 import mongoose from "mongoose";
 import ProductModel from "../models/product.model.js";
-import mongoDB from "../config/mongoose.config.js";
 import FileHandler from "../utils/fileHandler.js";
 import paths from "../utils/paths.js";
 import { convertToBoolean } from "../utils/converter.js";
@@ -14,8 +13,6 @@ export default class ProductManager {
 		this.#productModel = ProductModel;
 		this.#fileHandler = new FileHandler();
 	}
-
-
 
 	// Obtiene todos los productos con opciones de paginación //
 	getAll = async (paramFilters) => {
@@ -49,9 +46,6 @@ export default class ProductManager {
 			throw ErrorManager.handleError(error);
 		}
 	};
-
-
-
 
 	getOneById = async (id) => {
 		try {

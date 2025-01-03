@@ -19,4 +19,15 @@ router.get("/:id", async (req, res) => {
 	}
 });
 
+
+router.delete("/:id", async (req, res) => {
+	try {
+		await cartManager.deleteOneById(req.params.id);
+		res.status(200).json({ status: "success" });
+	} catch (error) {
+		res
+			.status(error.code || 500)
+			.json({ status: "error", message: error.message });
+	}
+});
 export default router;

@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import mongoDB from "../config/mongoose.config.js";
+
 import CartModel from "../models/cart.model.js";
 import ErrorManager from "./ErrorManager.js";
 
@@ -79,10 +79,6 @@ export default class CartManager {
 		}
 	};
 
-
-
-
-				// Elimina un carrito por su ID //
 	deleteOneById = async (id) => {
 		try {
 			if (!mongoDB.isValidID(id)) {
@@ -99,10 +95,6 @@ export default class CartManager {
 		}
 	};
 
-
-
-
-	            // Agrega un producto a un carrito //
 	addProductToCart = async (cartId, productId, quantity) => {
 		try {
 			if (!mongoDB.isValidID(cartId) || !mongoDB.isValidID(productId)) {
@@ -132,8 +124,6 @@ export default class CartManager {
 		}
 	};
 
-
-				// Elimina todos los productos de un carrito //
 	deleteAllProductsFromCart = async (id) => {
 		try {
 			if (!mongoDB.isValidID(id)) {
@@ -151,9 +141,6 @@ export default class CartManager {
 		}
 	};
 
-
-
-				// Elimina un producto de un carrito  //
 	deleteProductFromCart = async (id, productId, quantity) => {
 		try {
 			if (!mongoDB.isValidID(id) || !mongoDB.isValidID(productId)) {
